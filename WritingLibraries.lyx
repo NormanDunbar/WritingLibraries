@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -67,9 +67,6 @@
 }
 
 \usepackage[toc,page]{appendix}
-% Added by lyx2lyx
-\renewcommand{\textendash}{--}
-\renewcommand{\textemdash}{---}
 \end_preamble
 \options idxtotoc, numbers=noendperiod
 \use_default_options true
@@ -159,18 +156,21 @@ End
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format pdf2
 \output_sync 0
 \bibtex_command default
 \index_command default
+\float_placement !h
 \paperfontsize 11
 \spacing single
 \use_hyperref true
-\pdf_title "Arduino Interrupts"
+\pdf_title "Writing Arduino and AVR Libraries"
 \pdf_author "Norman Dunbar"
-\pdf_subject "How the Arduino Interrupts work and their use in sketches and code."
-\pdf_keywords "Arduino, AVR, ATmega328P, interrupts, microcontroller"
+\pdf_subject "How to write, test, package and installe libraries for the Arduino IDE and for PlatformIO as well as other development platforms for the AVR family of processors."
+\pdf_keywords "Arduino, AVR, libraries"
 \pdf_bookmarks true
 \pdf_bookmarksnumbered false
 \pdf_bookmarksopen false
@@ -201,6 +201,7 @@ End
 \suppress_date false
 \justification false
 \use_refstyle 1
+\use_minted 0
 \boxbgcolor #ff557f
 \index Index
 \shortcut idx
@@ -210,11 +211,14 @@ End
 \tocdepth 3
 \paragraph_separation skip
 \defskip medskip
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 2
 \paperpagestyle default
-\listings_params "style=myArduino"
+\listings_params "style=myArduino,showstringspaces=false"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -224,30 +228,424 @@ End
 
 \begin_body
 
-\begin_layout Chapter
-Writing Libraries
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%-------------------------------------------------------------------------------
+---------
+\end_layout
+
+\begin_layout Plain Layout
+
+%	TITLE PAGE
+\end_layout
+
+\begin_layout Plain Layout
+
+%-------------------------------------------------------------------------------
+---------
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begingroup
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[remember picture,overlay]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+coordinate [below=12cm] (midpoint) at (current page.north);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (current page.north west)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\backslash
+begin{tikzpicture}[remember picture,overlay]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[anchor=north west,inner sep=0pt] at (0,0) {
+\backslash
+includegraphics[width=
+\backslash
+paperwidth]{images/cover.png}}; % Background image
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+vfill
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+endgroup
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+%-------------------------------------------------------------------------------
+---------
+\end_layout
+
+\begin_layout Plain Layout
+
+%	COPYRIGHT PAGE
+\end_layout
+
+\begin_layout Plain Layout
+
+%-------------------------------------------------------------------------------
+---------
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+~
+\backslash
+vfill
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent 
+\backslash
+textsc{Published by MeMyselfEye Publishing ;-)}
+\backslash
+
+\backslash
+ % Publisher
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{Download from:}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+url{https://github.com/NormanDunbar/WritingLibraries/releases/latest}
+\backslash
+
+\backslash
+ % Download URL
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{Licence:}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent Licensed under the Creative Commons Attribution-NonCommercial 3.0
+ Unported License (the ``License'').
+ You may not use this file except in compliance with the License.
+ You may obtain a copy of the License at 
+\backslash
+url{http://creativecommons.org/licenses/by-nc/3.0}.
+ Unless required by applicable law or agreed to in writing, software distributed
+ under the License is distributed on an 
+\backslash
+textsc{``as is'' basis, without warranties or conditions of any kind}, either
+ express or implied.
+ See the License for the specific language governing permissions and limitations
+ under the License.
+\backslash
+
+\backslash
+ % License information
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+noindent 
+\backslash
+textit{First printing, August 2021} 
+\backslash
+
+\backslash
+% Printing/edition date
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+noindent This pdf document was created on 
+\backslash
+textit{
+\backslash
+pdfcreationdate}.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+noindent This pdf document was created on 
+\backslash
+textit{
+\backslash
+the
+\backslash
+day/
+\backslash
+the
+\backslash
+month/
+\backslash
+the
+\backslash
+year} at 
+\backslash
+textit{
+\backslash
+DTMcurrenttime}.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent Copyright 
+\backslash
+copyright 2021 Norman Dunbar
+\backslash
+
+\backslash
+ % Copyright notice
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-In this chapter, we are going to take a look at writing libraries.
- These are useful chunks of code that facilitate some, potentially difficult,
- task for a project or sketch.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+frontmatter
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList figure
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList table
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand lstlistoflistings
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+mainmatter
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Introduction
+\end_layout
+
+\begin_layout Standard
+In this eBook, we are going to take a look at writing libraries for the
+ Arduino and for other AVR based microcontroller systems.
+ Libraries are useful chunks of code that facilitate some, potentially difficult
+, task for a project or sketch.
  The Arduino environment has many libraries available for your use and in
  this chapter, we will create an example library that:
 \end_layout
 
 \begin_layout Itemize
-Initially, can be used in the Arduino IDE;
+Initially, can be used in the Arduino IDE, and also, in PlatformIO using
+ the Arduino framework;
 \end_layout
 
 \begin_layout Itemize
-Convert it to be used in the Arduino IDE and also, in PlatformIO using the
- Arduino framework;
-\end_layout
-
-\begin_layout Itemize
-Convert it again to plain AVR C++ which should make it usable on any AVR
- setup, including the Arduino IDE.
+Convert it to be used in the Arduino IDE and in PlatformIO without a framework
+ being needed and on any other AVR development system.
 \end_layout
 
 \begin_layout Standard
@@ -255,8 +653,94 @@ Where appropriate, details of packaging the library to make it available
  for download will also be given.
 \end_layout
 
+\begin_layout Standard
+The source code for the 
+\begin_inset Flex ClassName
+status open
+
+\begin_layout Plain Layout
+digitalPin
+\end_layout
+
+\end_inset
+
+ Arduino specific library, the 
+\begin_inset Flex ClassName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin
+\end_layout
+
+\end_inset
+
+ library and the \SpecialChar LyX
+ source code for this eBook are all freely available on
+ my GitHub account.
+ The locations are:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset href
+LatexCommand href
+target "https://github.com/NormanDunbar/digitalPin"
+
+\end_inset
+
+ for the 
+\begin_inset Flex ClassName
+status open
+
+\begin_layout Plain Layout
+digitalPin
+\end_layout
+
+\end_inset
+
+ library;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset href
+LatexCommand href
+target "https://github.com/NormanDunbar/avrDigitalPin"
+
+\end_inset
+
+ for the 
+\begin_inset Flex ClassName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin
+\end_layout
+
+\end_inset
+
+ library;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset href
+LatexCommand href
+target "https://github.com/NormanDunbar/WritingLibraries"
+
+\end_inset
+
+ for the \SpecialChar LyX
+ source of this eBook, plus a PDF version.
+\end_layout
+
 \begin_layout Section
-The Library
+The 
+\begin_inset Quotes eld
+\end_inset
+
+digitalPin
+\begin_inset Quotes erd
+\end_inset
+
+ Library
 \end_layout
 
 \begin_layout Standard
@@ -505,22 +989,28 @@ status open
 
 \begin_layout Plain Layout
 
- * A library to implement a digitalPin class for the Arduino IDE.
+ * A library to implement a digitalPin class for the Arduino
 \end_layout
 
 \begin_layout Plain Layout
 
- * This class is designed only for the IDE, but can be used unchanged
+ * IDE.
+ This class is designed only for the IDE, but can be
 \end_layout
 
 \begin_layout Plain Layout
 
- * by PlatformIO provided that the project using it, is using the 
+ * used unchanged by PlatformIO provided that the project
 \end_layout
 
 \begin_layout Plain Layout
 
- * Arduino Framework and has this defined in the platformio.ini file.
+ * using it, is using the Arduino Framework and has this
+\end_layout
+
+\begin_layout Plain Layout
+
+ * definedin the platformio.ini file.
 \end_layout
 
 \begin_layout Plain Layout
@@ -582,12 +1072,13 @@ public:
 
 \begin_layout Plain Layout
 
-    // There is no destructor as a digitalPin should never go out of scope.
+    // There is no destructor as a digitalPin should never 
 \end_layout
 
 \begin_layout Plain Layout
 
-    // Famous last words?
+    // go out of scope.
+ Famous last words?
 \end_layout
 
 \begin_layout Plain Layout
@@ -694,7 +1185,6 @@ private:
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
 The digitalPin.h Header File
 \begin_inset CommandInset label
 LatexCommand label
@@ -904,7 +1394,6 @@ digitalPin::digitalPin(uint8_t pinNumber,
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
 The digitalPin Constructor
 \begin_inset CommandInset label
 LatexCommand label
@@ -1073,7 +1562,6 @@ void digitalPin::setState(uint8_t pinState)
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
 The digitalPin setState() Function
 \begin_inset CommandInset label
 LatexCommand label
@@ -1214,7 +1702,6 @@ void digitalPin::toggleState()
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
 The digitalPin toggleState() Function
 \begin_inset CommandInset label
 LatexCommand label
@@ -1324,7 +1811,6 @@ uint8_t digitalPin::getState()
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
 The digitalPin getState() Function
 \begin_inset CommandInset label
 LatexCommand label
@@ -1587,7 +2073,6 @@ void loop() {
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
 Output Pin Test Sketch
 \begin_inset CommandInset label
 LatexCommand label
@@ -1791,12 +2276,12 @@ D2
 
 \end_inset
 
- is used to toggle the built in LED on pin D13
+ is used to toggle the built in LED on pin 
 \begin_inset Flex RegisterName
 status open
 
 \begin_layout Plain Layout
-
+D13
 \end_layout
 
 \end_inset
@@ -2083,7 +2568,6 @@ void loop() {
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
 Input Pin Test Sketch
 \begin_inset CommandInset label
 LatexCommand label
@@ -2126,8 +2610,8 @@ library
 \end_layout
 
 \begin_layout Standard
-What we need to do now is convert the two files we added manually to the
- sketches, into a proper library.
+What we need to do now is convert the two files, which we added manually
+ to both of the example sketches, into a proper library.
 \end_layout
 
 \begin_layout Subsection
@@ -2135,7 +2619,7 @@ Packaging for Library
 \end_layout
 
 \begin_layout Standard
-We now need to create a new structure to hold the library ready for packaging
+We need to create a new structure to hold the library ready for packaging
  and release.
  This structure is required by the Arduino IDE.
 \end_layout
@@ -2256,56 +2740,57 @@ digitalPin
 
 \begin_layout Plain Layout
 
-└── src
+|
 \end_layout
 
 \begin_layout Plain Layout
 
-    ├── digitalPin.cpp
++-- src
 \end_layout
 
 \begin_layout Plain Layout
 
-    └── digitalPin.h
+|   +-- digitalPin.cpp
 \end_layout
 
 \begin_layout Plain Layout
 
-├── examples
+|   +-- digitalPin.h
 \end_layout
 
 \begin_layout Plain Layout
 
-│   ├── digitalPins-input
++-- examples
 \end_layout
 
 \begin_layout Plain Layout
 
-│   │   └── digitalPins-input.ino
+|   +-- digitalPins-input
 \end_layout
 
 \begin_layout Plain Layout
 
-│   └── digitalPins-output
+|   |   +-- digitalPins-input.ino
 \end_layout
 
 \begin_layout Plain Layout
 
-│       └── digitalPins-output.ino
+|   +-- digitalPins-output
 \end_layout
 
 \begin_layout Plain Layout
 
-├── keywords.txt
+|       +-- digitalPins-output.ino
 \end_layout
 
 \begin_layout Plain Layout
 
-└── library.properties
++-- keywords.txt
 \end_layout
 
 \begin_layout Plain Layout
 
++-- library.properties
 \end_layout
 
 \end_inset
@@ -2370,7 +2855,7 @@ sentence=Implements input and output "digitalPin" objects.
 
 \begin_layout Plain Layout
 
-paragraph=A much nicer manner of using pins on an Arduino board.
+paragraph=A friendly way to use the pins on Arduino boards.
 \end_layout
 
 \begin_layout Plain Layout
@@ -2397,7 +2882,6 @@ architectures=avr
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
 Library Properties File
 \begin_inset CommandInset label
 LatexCommand label
@@ -2420,14 +2904,19 @@ name "lis:library-properties-file"
 
 \begin_layout Standard
 Most of the above is self explanatory.
- Whenever you update the library, make sure to change the version number
- in this file.
+ Whenever you update the library, 
+\emph on
+make sure
+\emph default
+ to change the version number in this file.
  
 \end_layout
 
 \begin_layout Standard
 Author and Maintainer is a comma separated list, if more than one author/maintai
 ner are involved.
+ The URL is where the library code and so on will be found for downloading.
+ We have not created this repository yet, that comes later.
 \end_layout
 
 \begin_layout Standard
@@ -2668,7 +3157,6 @@ toggleState   KEYWORD2
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
 Library Keywords File
 \begin_inset CommandInset label
 LatexCommand label
@@ -2990,6 +3478,7 @@ Open your browser and navigate to
 \begin_inset CommandInset href
 LatexCommand href
 target "https://github.com"
+literal "false"
 
 \end_inset
 
@@ -3436,7 +3925,6 @@ lib_deps = https://github.com/NormanDunbar/digitalPin.git
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
 Platformio.ini
 \begin_inset CommandInset label
 LatexCommand label
@@ -3696,7 +4184,6 @@ void loop() {
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
 main.cpp
 \begin_inset CommandInset label
 LatexCommand label
@@ -3880,7 +4367,7 @@ Indexing .pio/build/uno/libcd3/libdigitalPin.a
 
 \begin_layout Plain Layout
 
-    LOTS of Arduino files get compiled here
+    Lots of Arduino files get compiled here
 \end_layout
 
 \begin_layout Plain Layout
@@ -3939,8 +4426,8 @@ Much of the output has been removed for brevity.
 \end_layout
 
 \begin_layout Itemize
-The board I am compiling for and the features that it has with regard to
- memory sizes etc;
+The hardware I am compiling for and the features that it has with regard
+ to memory sizes etc;
 \end_layout
 
 \begin_layout Itemize
@@ -3948,8 +4435,8 @@ My library being installed directly from GitHub;
 \end_layout
 
 \begin_layout Itemize
-The dependency graph showing what my sketch is dependent upon – in this
- example, it's my own 
+The dependency graph showing a list of libraries which my sketch is dependent
+ upon – in this example, it's only my own 
 \begin_inset Flex ClassName
 status open
 
@@ -3973,7 +4460,21 @@ main.cpp
 
 \end_inset
 
- file being compiled alongside the digitalPin static library, 
+ source file being compiled;
+\end_layout
+
+\begin_layout Itemize
+Building the 
+\begin_inset Flex ClassName
+status open
+
+\begin_layout Plain Layout
+digitalPin
+\end_layout
+
+\end_inset
+
+ static library, 
 \begin_inset Flex FileName
 status open
 
@@ -4010,7 +4511,7 @@ Firmware.elf
 
 \end_inset
 
- being linked;
+ being linked to the two libraries;
 \end_layout
 
 \begin_layout Itemize
@@ -4023,7 +4524,17 @@ Firmware.hex
 
 \end_inset
 
- being created;
+ being created from 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+Firmware.elf
+\end_layout
+
+\end_inset
+
+;
 \end_layout
 
 \begin_layout Itemize
@@ -4031,8 +4542,17 @@ The final size of the code's Static and Flash RAM usage.
 \end_layout
 
 \begin_layout Standard
-When linking to create firmware.elf, the sketch code will be linked with
- both the 
+When linking to create 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+firmware.elf
+\end_layout
+
+\end_inset
+
+, the sketch code will be linked with both the 
 \begin_inset Flex FileName
 status open
 
@@ -4056,7 +4576,17 @@ libFrameworkArduino.a
 \end_layout
 
 \begin_layout Standard
-The output file, firmware.hex can be uploaded to my Uno board with this command:
+The output file, firmware.hex
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+ can be uploaded to my Uno board with this command:
 \end_layout
 
 \begin_layout Standard
@@ -4227,12 +4757,30 @@ And now, looking at the Uno board, I see the built in LED flashing away
 \end_layout
 
 \begin_layout Section
-AVR Libraries
+The 
+\begin_inset Quotes eld
+\end_inset
+
+avrDigitalPin
+\begin_inset Quotes erd
+\end_inset
+
+ Library
 \end_layout
 
 \begin_layout Standard
-The problem with the Arduino library in the preceding section is that it
- depends on the Arduino language being present.
+The problem with the Arduino specific 
+\begin_inset Flex ClassName
+status open
+
+\begin_layout Plain Layout
+digitalPin
+\end_layout
+
+\end_inset
+
+ library in the preceding section is that it depends on the Arduino language
+ being present.
  It can be used in systems such as PlatformIO but only if the project is
  using the Arduino framework, and has specified this in the 
 \begin_inset Flex FileName
@@ -4248,12 +4796,16 @@ platformio.ini
  What about people who don't have, or don't want to use Arduino libraries?
  Lets convert the code to remove the Arduino specific function calls and
  make the library usable without requiring all the extra baggage that comes
- with that framework.
+ with that particular framework.
 \end_layout
 
 \begin_layout Standard
-We should operate on a copy of the existing structure, so, back where out
- source code lives, copy the 
+We 
+\emph on
+should
+\emph default
+ operate on a copy of the existing structure, so, back where our source
+ code lives, copy the 
 \begin_inset Flex FileName
 status open
 
@@ -4275,6 +4827,27 @@ avrDigitalPin
 
  – we will need a new name as it will effectively be a new library, even
  though it does the same work as the current one.
+ Rename the header and implementation files to 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin.h
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin.cpp
+\end_layout
+
+\end_inset
+
+ respectively.
 \end_layout
 
 \begin_layout Subsection
@@ -4295,38 +4868,20 @@ Converting the Header File
 
 \begin_layout Standard
 As we are not using the Arduino Language any more, we need to remove anything
- in the header file that references it.
- To this end:
-\end_layout
-
-\begin_layout Itemize
-Remove the line that reads 
-\begin_inset listings
-inline true
+ in the header file, 
+\begin_inset Flex FileName
 status open
 
 \begin_layout Plain Layout
-
-#include "Arduino.h"
+avrDigitalPin.h
 \end_layout
 
 \end_inset
 
-;
-\end_layout
-
-\begin_layout Itemize
-Rename the class from 
-\begin_inset Flex ClassName
-status open
-
-\begin_layout Plain Layout
-digitalPin
-\end_layout
-
-\end_inset
-
- to 
+, which references it.
+ In addition, we will define some new data types to avoid collisions with
+ Arduino names – we may wish to use the library with an Arduino sketch –
+ and rename the class itself to 
 \begin_inset Flex ClassName
 status open
 
@@ -4340,62 +4895,64 @@ avrDigitalPin
 \end_layout
 
 \begin_layout Standard
-The was a simple start.
- The rest of the function templates look ok, there's nothing Arduino-ish
- present, so they should be able to stay as they are.
-\end_layout
-
-\begin_layout Standard
-The constructor requires a pin mode to be passed.
- Until now we have used the ones supplied in the Arduino Language.
- We can't do that any more.
- We need to define our own, but as we might want to use this library in
- the Arduino IDE, we cannot use the same names.
- Well, we can, but with a prefix.
-\end_layout
-
-\begin_layout Standard
-We can create a 
+Until now we have used various features of the Arduino Language such as
+ 
 \begin_inset Flex RegisterName
 status open
 
 \begin_layout Plain Layout
-typedef
+HIGH
 \end_layout
 
 \end_inset
 
- with an 
+, 
 \begin_inset Flex RegisterName
 status open
 
 \begin_layout Plain Layout
-enum
+LOW
 \end_layout
 
 \end_inset
 
- to give us similar sounding names to those already used by the Arduino.
- Add the code in Listing 
+, 
+\begin_inset Flex RegisterName
+status open
+
+\begin_layout Plain Layout
+INPUT
+\end_layout
+
+\end_inset
+
+ and so on.
+ We cannot do that any more so we must define our own equivalent names,
+ but as we might still want to use this library in the Arduino IDE, we cannot
+ use the same names as before – the compiler will complain.
+ 
+\end_layout
+
+\begin_layout Standard
+Edit the header file, 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin.h
+\end_layout
+
+\end_inset
+
+, to resemble Listing 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "lis:AvrDigitalPin-Pin-Modes"
+reference "lis:AvrDigitalPin-Header-File-1"
 
 \end_inset
 
- to the header file, immediately after the 
-\begin_inset listings
-inline true
-status open
-
-\begin_layout Plain Layout
-
-public:
-\end_layout
-
-\end_inset
-
- line already there.
+ which is the complete new header file.
+ The changes will be explained in the following sections.
 \end_layout
 
 \begin_layout Standard
@@ -4405,32 +4962,585 @@ status open
 
 \begin_layout Plain Layout
 
-    // Typedef for the pin modes.
+#ifndef AVRDIGITALPIN_H
 \end_layout
 
 \begin_layout Plain Layout
 
-    typedef enum pinMode : uint8_t {
+#define AVRDIGITALPIN_H
 \end_layout
 
 \begin_layout Plain Layout
 
-        INPUT,
 \end_layout
 
 \begin_layout Plain Layout
 
-        INPUT_PULLUP,
+#include <stdint.h>
 \end_layout
 
 \begin_layout Plain Layout
 
-        OUTPUT
 \end_layout
 
 \begin_layout Plain Layout
 
-    } pinMode_t;
+/* 
+\end_layout
+
+\begin_layout Plain Layout
+
+ * A library to implement a digitalPin class for the Arduino 
+\end_layout
+
+\begin_layout Plain Layout
+
+ * IDE.
+ This class is designed only for the IDE, but can be
+\end_layout
+
+\begin_layout Plain Layout
+
+ * used unchanged by PlatformIO provided that the project
+\end_layout
+
+\begin_layout Plain Layout
+
+ *  using it, is using the Arduino Framework and has this
+\end_layout
+
+\begin_layout Plain Layout
+
+ *  defined in the platformio.ini file.
+\end_layout
+
+\begin_layout Plain Layout
+
+ * 
+\end_layout
+
+\begin_layout Plain Layout
+
+ * Norman Dunbar
+\end_layout
+
+\begin_layout Plain Layout
+
+ * 26 August 2021.
+\end_layout
+
+\begin_layout Plain Layout
+
+ */
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Typedef for the pin modes.
+\end_layout
+
+\begin_layout Plain Layout
+
+typedef enum pin_Mode : uint8_t {
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinINPUT,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinINPUT_PULLUP,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinOUTPUT
+\end_layout
+
+\begin_layout Plain Layout
+
+} pinMode_t;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Typedef for pin names.
+ Covers Arduino and AVR naming.
+\end_layout
+
+\begin_layout Plain Layout
+
+typedef enum pin_Name : uint8_t  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD0 = 0,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD1,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD2,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD3,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD4,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD5,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD6,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD7,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD8,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD9,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD10,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD11,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD12,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD13,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD14,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD15,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD16,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD17,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD18,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinD19,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinA0 = pinD14,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinA1,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinA2,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinA3,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinA4,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinA5,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPD0 = pinD0,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPD1,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPD2,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPD3,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPD4,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPD5,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPD6,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPD7,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPB0 = pinD8,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPB1,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPB2,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPB3,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPB4,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPB5,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPC0 = pinA0,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPC1,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPC2,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPC3,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPC4,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinPC5
+\end_layout
+
+\begin_layout Plain Layout
+
+} pinName_t;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Typedef for the pin states.
+\end_layout
+
+\begin_layout Plain Layout
+
+typedef enum pin_State : uint8_t {
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinLOW = 0,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinHIGH
+\end_layout
+
+\begin_layout Plain Layout
+
+} pinState_t;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class avrDigitalPin {
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+public:
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // Constructor.
+\end_layout
+
+\begin_layout Plain Layout
+
+    avrDigitalPin(pinName_t pinNumber,
+\end_layout
+
+\begin_layout Plain Layout
+
+                  pinMode_t Mode);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // There is no destructor as a digitalPin should never
+\end_layout
+
+\begin_layout Plain Layout
+
+    //  go out of scope.
+ Famous last words?
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // For Output digitalPins:
+\end_layout
+
+\begin_layout Plain Layout
+
+    void setState(pinState_t pinState);
+\end_layout
+
+\begin_layout Plain Layout
+
+    void toggleState();
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // For Input and Output Pins
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinState_t getState();
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+private:
+\end_layout
+
+\begin_layout Plain Layout
+
+    // Data Direction Register.
+\end_layout
+
+\begin_layout Plain Layout
+
+    volatile uint8_t *_ddr;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // PORT register.
+\end_layout
+
+\begin_layout Plain Layout
+
+    volatile uint8_t *_port;
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    // PIN register.
+\end_layout
+
+\begin_layout Plain Layout
+
+    volatile uint8_t *_pin;
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    // Which bit in the above registers for this pin?
+\end_layout
+
+\begin_layout Plain Layout
+
+    uint8_t _bitMask;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // Are we an OUTPUT pin?
+\end_layout
+
+\begin_layout Plain Layout
+
+    bool _isOutput;
+\end_layout
+
+\begin_layout Plain Layout
+
+};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+#endif // AVRDIGITALPIN_H
 \end_layout
 
 \begin_layout Plain Layout
@@ -4442,7 +5552,114 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-AvrDigitalPin.h - Pin Modes
+The AvrDigitalPin.h Header File
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:AvrDigitalPin-Header-File-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The first few changes are minimal.
+ As we have renamed the file, it's appropriate to change the include guard
+ lines, so those have been changed at the very top.
+ In addition, we no longer require the 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+Arduino.h
+\end_layout
+
+\end_inset
+
+ header file to be included, so that line has been deleted.
+\end_layout
+
+\begin_layout Standard
+Following the comments explaining the library, we see a new 
+\begin_inset Flex RegisterName
+status open
+
+\begin_layout Plain Layout
+typedef
+\end_layout
+
+\end_inset
+
+ which creates a new data type for the allowed pin modes.
+ Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:AvrDigitalPin-Pin-Modes"
+
+\end_inset
+
+ shows the code.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+// Typedef for the pin modes.
+\end_layout
+
+\begin_layout Plain Layout
+
+typedef enum pin_Mode : uint8_t {
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinINPUT,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinINPUT_PULLUP,
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinOUTPUT
+\end_layout
+
+\begin_layout Plain Layout
+
+} pinMode_t;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The AvrDigitalPin.h - Pin Modes
 \begin_inset CommandInset label
 LatexCommand label
 name "lis:AvrDigitalPin-Pin-Modes"
@@ -4463,48 +5680,44 @@ name "lis:AvrDigitalPin-Pin-Modes"
 \end_layout
 
 \begin_layout Standard
-We will (or should) define some method of identifying the pins too.
- This can be a bit tricky as the Arduino simply numbers them, but if you
- are not using the Arduino, then the data sheet refers to each pin by it's
- port number and it's pin number within that port.
- It would be nice to have both options, but for the Arduino's digital pin
- naming, we shall use a 
-\begin_inset Quotes eld
-\end_inset
-
-D
-\begin_inset Quotes erd
-\end_inset
-
- prefix as we can't simply use a number for an 
-\begin_inset Flex RegisterName
-status open
-
-\begin_layout Plain Layout
-enum
-\end_layout
-
-\end_inset
-
- entry.
-\end_layout
-
-\begin_layout Standard
-Add the code in Listing 
+We need to define a of identifying the various pins too.
+ The code in Listing 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lis:AvrDigitalPin-Pin-Names"
 
 \end_inset
 
- to the header file, just below the newly added code from Listing 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lis:AvrDigitalPin-Pin-Modes"
+ is the new 
+\begin_inset Flex RegisterName
+status open
+
+\begin_layout Plain Layout
+typedef
+\end_layout
 
 \end_inset
 
-.
+ for pin names.
+ The full set on names is already present in Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:AvrDigitalPin-Header-File-1"
+
+\end_inset
+
+, so the code in Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:AvrDigitalPin-Pin-Names"
+
+\end_inset
+
+ is an excerpt only, for brevity.
+ Each pin on an ATmega328P (the microcontroller on your Arduino Uno) has
+ a name in a format that slightly resembles the Arduino pin names but also
+ in a manner representing the AVR naming convention.
+ Feel free to use either, as appropriate.
 \end_layout
 
 \begin_layout Standard
@@ -4525,111 +5738,111 @@ status open
 
 \begin_layout Plain Layout
 
-        D0 = 0,
+        pinD0 = 0,
 \end_layout
 
 \begin_layout Plain Layout
 
-        D1,
+        pinD1,
 \end_layout
 
 \begin_layout Plain Layout
 
         ...
- D2 through D18 omitted, but required here.
+ pinD2 through pinD18 omitted.
  
 \end_layout
 
 \begin_layout Plain Layout
 
-        D19,
+        pinD19,
 \end_layout
 
 \begin_layout Plain Layout
 
-        A0 = D14,
+        pinA0 = pinD14,
 \end_layout
 
 \begin_layout Plain Layout
 
-        A1,
-\end_layout
-
-\begin_layout Plain Layout
-
-        ...
- A2 through A4 omitted, but required here.
-\end_layout
-
-\begin_layout Plain Layout
-
-        A5,
-\end_layout
-
-\begin_layout Plain Layout
-
-        PD0 = D0,
-\end_layout
-
-\begin_layout Plain Layout
-
-        PD1,
+        pinA1,
 \end_layout
 
 \begin_layout Plain Layout
 
         ...
- PD2 through PD6 omitted, but required here.
+ pinA2 through pinA4 omitted.
+\end_layout
+
+\begin_layout Plain Layout
+
+        pinA5,
+\end_layout
+
+\begin_layout Plain Layout
+
+        pinPD0 = pinD0,
+\end_layout
+
+\begin_layout Plain Layout
+
+        pinPD1,
+\end_layout
+
+\begin_layout Plain Layout
+
+        ...
+ pinPD2 through pinPD6 omitted.
  
 \end_layout
 
 \begin_layout Plain Layout
 
-        PD7,
+        pinPD7,
 \end_layout
 
 \begin_layout Plain Layout
 
-        PC0 = A0,
+        pinPB0 = pinD8,
 \end_layout
 
 \begin_layout Plain Layout
 
-        PC1,
-\end_layout
-
-\begin_layout Plain Layout
-
-        ...
- PC2 through PC4 omitted, but required here.
- 
-\end_layout
-
-\begin_layout Plain Layout
-
-        PC5,
-\end_layout
-
-\begin_layout Plain Layout
-
-        PB0 = D8,
-\end_layout
-
-\begin_layout Plain Layout
-
-        PB1,
+        pinPB1,
 \end_layout
 
 \begin_layout Plain Layout
 
         ...
- PB2 through PD5 omitted, but required here.
+ pinPB2 through pinPB5 omitted.
  
 \end_layout
 
 \begin_layout Plain Layout
 
-        PB5
+        pinPB5,
+\end_layout
+
+\begin_layout Plain Layout
+
+        pinPC0 = pinA0,
+\end_layout
+
+\begin_layout Plain Layout
+
+        pinPC1,
+\end_layout
+
+\begin_layout Plain Layout
+
+        ...
+ pinPC2 through pinPC4 omitted.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+        pinPC5
 \end_layout
 
 \begin_layout Plain Layout
@@ -4646,7 +5859,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-AvrDigitalPin.h - Pin Names
+The AvrDigitalPin.h - Pin Names
 \begin_inset CommandInset label
 LatexCommand label
 name "lis:AvrDigitalPin-Pin-Names"
@@ -4666,27 +5879,8 @@ name "lis:AvrDigitalPin-Pin-Names"
 
 \end_layout
 
-\begin_layout Standard
-In the interested of saving digital bits in the output, I've omitted the
- boring bits.
- You will need them though, so if you are typing along, please ensure that
- all those indicated as being omitted, are in fact present.
-\end_layout
-
-\begin_layout Standard
-What the above 
-\begin_inset Flex RegisterName
-status open
-
-\begin_layout Plain Layout
-typedef
-\end_layout
-
-\end_inset
-
- is setting up is the ability to name the pins either in a pseudo Arduino
- manner; or, with the AVR naming convention.
- Pins 
+\begin_layout Itemize
+Arduino pins 
 \begin_inset Flex RegisterName
 status open
 
@@ -4706,7 +5900,7 @@ A5
 
 \end_inset
 
- are actually the same as pins 
+ are actually the same as Arduino pins 
 \begin_inset Flex RegisterName
 status open
 
@@ -4726,8 +5920,11 @@ D19
 
 \end_inset
 
-.
- Pins 
+; 
+\end_layout
+
+\begin_layout Itemize
+AVR pins 
 \begin_inset Flex RegisterName
 status open
 
@@ -4767,7 +5964,11 @@ D7
 
 \end_inset
 
-, pins 
+;
+\end_layout
+
+\begin_layout Itemize
+AVR pins 
 \begin_inset Flex RegisterName
 status open
 
@@ -4787,12 +5988,12 @@ PB5
 
 \end_inset
 
- are Arduino pins D8
+ are Arduino pins 
 \begin_inset Flex RegisterName
 status open
 
 \begin_layout Plain Layout
-
+D8
 \end_layout
 
 \end_inset
@@ -4807,7 +6008,11 @@ D13
 
 \end_inset
 
- and pins 
+;
+\end_layout
+
+\begin_layout Itemize
+AVR pins 
 \begin_inset Flex RegisterName
 status open
 
@@ -4847,20 +6052,49 @@ A5
 
 \end_inset
 
+ and Arduino pins 
+\begin_inset Flex RegisterName
+status open
+
+\begin_layout Plain Layout
+D14
+\end_layout
+
+\end_inset
+
+ through 
+\begin_inset Flex RegisterName
+status open
+
+\begin_layout Plain Layout
+D19
+\end_layout
+
+\end_inset
+
 .
- Confused yet?
 \end_layout
 
 \begin_layout Standard
-Finally, we need to add a typedef for the ping states, HIGH and LOW.
- Add the code in Listing 
+Finally, we have a 
+\begin_inset Flex RegisterName
+status open
+
+\begin_layout Plain Layout
+typedef
+\end_layout
+
+\end_inset
+
+ for the pin states, HIGH and LOW.
+ Listing 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lis:AvrDigitalPin-Pin-States"
 
 \end_inset
 
- to the header file just after that which we have just added.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -4870,27 +6104,27 @@ status open
 
 \begin_layout Plain Layout
 
-    // Typedef for the pin states.
+// Typedef for the pin states.
 \end_layout
 
 \begin_layout Plain Layout
 
-    typedef enum pinState : uint8_t {
+typedef enum pin_State : uint8_t {
 \end_layout
 
 \begin_layout Plain Layout
 
-        LOW = 0,
+    pinLOW = 0,
 \end_layout
 
 \begin_layout Plain Layout
 
-        HIGH
+    pinHIGH
 \end_layout
 
 \begin_layout Plain Layout
 
-    } pinState_t;
+} pinState_t;
 \end_layout
 
 \begin_layout Plain Layout
@@ -4902,7 +6136,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-AvrDigitalPin.h - Pin States
+The AvrDigitalPin.h - Pin States
 \begin_inset CommandInset label
 LatexCommand label
 name "lis:AvrDigitalPin-Pin-States"
@@ -4922,84 +6156,19 @@ name "lis:AvrDigitalPin-Pin-States"
 
 \end_layout
 
-\begin_layout Subsubsection
-Converting the Constructor
-\end_layout
-
 \begin_layout Standard
-When we wrote the original library for the Arduino, we declared the two
- parameters for the constructor as 
-\begin_inset Flex RegisterName
-status open
-
-\begin_layout Plain Layout
-uint8_t
-\end_layout
-
-\end_inset
-
- – unsigned 8 bit integers.
- We can leave this as it is, however, as we have no created a 
-\begin_inset Flex RegisterName
-status open
-
-\begin_layout Plain Layout
-typedef
-\end_layout
-
-\end_inset
-
- of 
-\begin_inset Flex RegisterName
-status open
-
-\begin_layout Plain Layout
-pinMode_t
-\end_layout
-
-\end_inset
-
- and 
-\begin_inset Flex RegisterName
-status open
-
-\begin_layout Plain Layout
-pinName_t
-\end_layout
-
-\end_inset
-
- which are themselves 
-\begin_inset Flex RegisterName
-status open
-
-\begin_layout Plain Layout
-uint8_t
-\end_layout
-
-\end_inset
-
- data types, we can get the compiler to do some parameter validation for
- us simply by changing the constructor to that shown in Listing 
+Finally, we have a slightly amended class definition.
+ Listing 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "lis:AvrDigitalPin.h-Constructor"
+reference "lis:AvrDigitalPin-Class-Definition"
 
 \end_inset
 
-.
- We shouldn't be able to step outwith the bounds of the data types used.
- With a plain 
-\begin_inset Flex RegisterName
-status open
-
-\begin_layout Plain Layout
-uint8_t
-\end_layout
-
-\end_inset
-
-, we could pass any value to the constructor.
+ shows the new code.
+ The changes are minor in that the class has been renamed, the constructor
+ and other functions take and/or return parameters and results using the
+ newly defined data types in the previous listings.
 \end_layout
 
 \begin_layout Standard
@@ -5009,17 +6178,177 @@ status open
 
 \begin_layout Plain Layout
 
+class avrDigitalPin {
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+public:
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
     // Constructor.
 \end_layout
 
 \begin_layout Plain Layout
 
-    digitalPin(pinMode_t pinNumber,
+    avrDigitalPin(pinName_t pinNumber,
 \end_layout
 
 \begin_layout Plain Layout
 
-               pinNames_t Mode);
+                  pinMode_t Mode);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // There is no destructor as a digitalPin should never
+\end_layout
+
+\begin_layout Plain Layout
+
+    //  go out of scope.
+ Famous last words?
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // For Output digitalPins:
+\end_layout
+
+\begin_layout Plain Layout
+
+    void setState(pinState_t pinState);
+\end_layout
+
+\begin_layout Plain Layout
+
+    void toggleState();
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // For Input and Output Pins
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinState_t getState();
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+private:
+\end_layout
+
+\begin_layout Plain Layout
+
+    // Data Direction Register.
+\end_layout
+
+\begin_layout Plain Layout
+
+    volatile uint8_t *_ddr;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // PORT register.
+\end_layout
+
+\begin_layout Plain Layout
+
+    volatile uint8_t *_port;
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    // PIN register.
+\end_layout
+
+\begin_layout Plain Layout
+
+    volatile uint8_t *_pin;
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    // Which bit in the above registers for this pin?
+\end_layout
+
+\begin_layout Plain Layout
+
+    uint8_t _bitMask;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // Are we an OUTPUT pin?
+\end_layout
+
+\begin_layout Plain Layout
+
+    bool _isOutput;
+\end_layout
+
+\begin_layout Plain Layout
+
+};
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -5031,11 +6360,10 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
-AvrDigitalPin.h - Constructor
+The AvrDigitalPin.h - Class Definition
 \begin_inset CommandInset label
 LatexCommand label
-name "lis:AvrDigitalPin.h-Constructor"
+name "lis:AvrDigitalPin-Class-Definition"
 
 \end_inset
 
@@ -5053,8 +6381,32 @@ name "lis:AvrDigitalPin.h-Constructor"
 \end_layout
 
 \begin_layout Standard
-You should also change the data types in the constructor's implementation
- in the 
+The major change is to the private member variables.
+ Instead of a pin number, we now have three registers and a bit mask.
+ The registers, stored as pointers, are used to hold the Data Direction
+ Register, DDR; the Port and Pin registers for a pin, plus a bit mask that
+ determines which bit in each of the three registers is responsible for
+ controlling a particular pin.
+ The constructor converts its pin number parameter into the three registers
+ and the bit mask.
+ This will be discussed shortly.
+\end_layout
+
+\begin_layout Subsubsection
+Converting the Constructor
+\end_layout
+
+\begin_layout Standard
+The constructor has to do a lot more work now, unfortunately, as we have
+ removed the helpful features of the Arduino Language.
+ Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:AvrDigitalPin.cpp-Constructor"
+
+\end_inset
+
+ shows the new code which you can find in the implementation file, 
 \begin_inset Flex FileName
 status open
 
@@ -5064,19 +6416,517 @@ avrDigitalPin.cpp
 
 \end_inset
 
- file to match.
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+YOU ARE HERE.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+// Constructor.
+\end_layout
+
+\begin_layout Plain Layout
+
+avrDigitalPin::avrDigitalPin(pinName_t pinNumber,
+\end_layout
+
+\begin_layout Plain Layout
+
+                             pinMode_t Mode)
+\end_layout
+
+\begin_layout Plain Layout
+
+    : _isOutput(false)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+    // Calculate the PORT, PIN and DDR from the pin.
+\end_layout
+
+\begin_layout Plain Layout
+
+    // D0 through D7 = PORTD,
+\end_layout
+
+\begin_layout Plain Layout
+
+    // D8 through D13 = PORTB,
+\end_layout
+
+\begin_layout Plain Layout
+
+    // D14 (A0) through D19 (A5) = PORTC.
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (pinNumber <= pinD7) {
+\end_layout
+
+\begin_layout Plain Layout
+
+        // We are in D registers.
+\end_layout
+
+\begin_layout Plain Layout
+
+        _port = &PORTD;
+\end_layout
+
+\begin_layout Plain Layout
+
+        _pin = &PIND;
+\end_layout
+
+\begin_layout Plain Layout
+
+        _ddr = &DDRD;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        // PinBit is the same as the pin.
+\end_layout
+
+\begin_layout Plain Layout
+
+        _bitMask = pinNumber;
+\end_layout
+
+\begin_layout Plain Layout
+
+    } else if (pinNumber <= pinD13) {
+\end_layout
+
+\begin_layout Plain Layout
+
+        // We are in B registers.
+\end_layout
+
+\begin_layout Plain Layout
+
+        _port = &PORTB;
+\end_layout
+
+\begin_layout Plain Layout
+
+        _pin = &PINB;
+\end_layout
+
+\begin_layout Plain Layout
+
+        _ddr = &DDRB;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        // PinBit is the pin - 8
+\end_layout
+
+\begin_layout Plain Layout
+
+        _bitMask = pinNumber - 8;
+\end_layout
+
+\begin_layout Plain Layout
+
+    } else {
+\end_layout
+
+\begin_layout Plain Layout
+
+        // We are in C registers.
+\end_layout
+
+\begin_layout Plain Layout
+
+        _port = &PORTC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        _pin = &PINC;
+\end_layout
+
+\begin_layout Plain Layout
+
+        _ddr = &DDRC;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        // PinBit is the pin - 14
+\end_layout
+
+\begin_layout Plain Layout
+
+        _bitMask = pinNumber - 14;
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // Now we have the registers, configure the pin.
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (Mode == pinOUTPUT) {
+\end_layout
+
+\begin_layout Plain Layout
+
+        // OUTPUT_pin: set bit in DDRx register.
+\end_layout
+
+\begin_layout Plain Layout
+
+        *_ddr |= (1 << _bitMask);
+\end_layout
+
+\begin_layout Plain Layout
+
+        _isOutput = true;
+\end_layout
+
+\begin_layout Plain Layout
+
+    } else {
+\end_layout
+
+\begin_layout Plain Layout
+
+        // INPUT [+/-PULLUP].
+\end_layout
+
+\begin_layout Plain Layout
+
+        // Clear bit in DDRx register.
+\end_layout
+
+\begin_layout Plain Layout
+
+        *_ddr &= ~(1 << _bitMask);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        if (Mode == pinINPUT) {
+\end_layout
+
+\begin_layout Plain Layout
+
+            // INPUT: Clear bit in PORTx register.
+\end_layout
+
+\begin_layout Plain Layout
+
+            *_port &= ~(1 << _bitMask);
+\end_layout
+
+\begin_layout Plain Layout
+
+        } else {
+\end_layout
+
+\begin_layout Plain Layout
+
+            // INPUT_PULLUP: Set bit in PORTx Register.
+\end_layout
+
+\begin_layout Plain Layout
+
+            *_port |= (1 << _bitMask);
+\end_layout
+
+\begin_layout Plain Layout
+
+        }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The AvrDigitalPin.cpp - Constructor
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:AvrDigitalPin.cpp-Constructor"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
 Setting Output State
 \end_layout
 
-\begin_layout Subsubsection
-Toggling Output State
+\begin_layout Standard
+The function prototype for the 
+\begin_inset Flex FunctionName
+status open
+
+\begin_layout Plain Layout
+setState()
+\end_layout
+
+\end_inset
+
+ function should be changed to match the code in Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:AvrDigitalPin.h-setState-function"
+
+\end_inset
+
+, again the only change is to the parameter's data type.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+    // For Output digitalPins:
+\end_layout
+
+\begin_layout Plain Layout
+
+    void setState(pinState_t pinState);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The AvrDigitalPin.h - setState() Function
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:AvrDigitalPin.h-setState-function"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This changes should also be made in the implementation file, 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin.cpp
+\end_layout
+
+\end_inset
+
+to avoid getting complaints from the compiler.
+\end_layout
+
+\begin_layout Standard
+No changes are required to the header file for the 
+\begin_inset Flex FunctionName
+status open
+
+\begin_layout Plain Layout
+toggleState()
+\end_layout
+
+\end_inset
+
+ function, it remains unchanged.
 \end_layout
 
 \begin_layout Subsubsection
 Reading Input State
+\end_layout
+
+\begin_layout Standard
+Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:AvrDigitalPin.h-getState-function"
+
+\end_inset
+
+ shows the change required for the 
+\begin_inset Flex FunctionName
+status open
+
+\begin_layout Plain Layout
+getState()
+\end_layout
+
+\end_inset
+
+ function which now will return a 
+\begin_inset Flex RegisterName
+status open
+
+\begin_layout Plain Layout
+pinState_t
+\end_layout
+
+\end_inset
+
+ data type for the result, as opposed to the previous 
+\begin_inset Flex RegisterName
+status open
+
+\begin_layout Plain Layout
+uint8_t
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+    // For Input and Output Pins
+\end_layout
+
+\begin_layout Plain Layout
+
+    pinState_t getState();
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The AvrDigitalPin.h - getState() Function
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:AvrDigitalPin.h-getState-function"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Make sure to change the data type in 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin.cpp
+\end_layout
+
+\end_inset
+
+ as well, or the compiler won't like it.
 \end_layout
 
 \begin_layout Subsection
@@ -5101,6 +6951,22 @@ Creating a GitHub repository
 
 \begin_layout Subsection
 Using With the Arduino IDE
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+backmatter
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body
