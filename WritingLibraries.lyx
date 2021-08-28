@@ -6417,6 +6417,48 @@ avrDigitalPin.cpp
 \end_inset
 
 .
+ We still use the 
+\begin_inset Quotes eld
+\end_inset
+
+standard
+\begin_inset Quotes erd
+\end_inset
+
+ method of setting the flag indicating an output pin, but after that, it
+ gets a little tricky.
+\end_layout
+
+\begin_layout Standard
+Each pin on an ATmega328P belongs to a set of three registers:
+\end_layout
+
+\begin_layout Itemize
+The Data Direction Register, or DDR, which tells the pin if it is input
+ of output.
+ It cannot tell if a pin is input with pullups though;
+\end_layout
+
+\begin_layout Itemize
+The PORT register, which for output pins determines the state of the pin,
+ high or low, depending on the pin's bit in the register.
+ For input puns, if the pin's bit is set then the pin is an input with pullup;
+\end_layout
+
+\begin_layout Itemize
+The PIN register which for input pins allows the state of the pin to be
+ read and for output pins, writing a 1 to the pin's bit, will toggle the
+ pin.
+\end_layout
+
+\begin_layout Standard
+We can work out the required set of registers based on the pin number passed
+ over.
+ This also allows the bit in the bit mask that we need to be calculated
+ also, giving us the full set of information to manipulate the pins.
+ The Arduino uses a set of tables, stored in Flash RAM to hold details of
+ which pin belongs in which set of registers.
+ 
 \end_layout
 
 \begin_layout Standard
