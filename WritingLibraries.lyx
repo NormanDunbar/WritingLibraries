@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -67,9 +67,6 @@
 }
 
 \usepackage[toc,page]{appendix}
-% Added by lyx2lyx
-\renewcommand{\textendash}{--}
-\renewcommand{\textemdash}{---}
 \end_preamble
 \options idxtotoc, numbers=noendperiod
 \use_default_options true
@@ -159,6 +156,8 @@ End
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format pdf2
 \output_sync 0
@@ -202,6 +201,7 @@ End
 \suppress_date false
 \justification false
 \use_refstyle 1
+\use_minted 0
 \boxbgcolor #ff557f
 \index Index
 \shortcut idx
@@ -211,7 +211,10 @@ End
 \tocdepth 3
 \paragraph_separation skip
 \defskip medskip
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 2
 \paperpagestyle default
@@ -681,6 +684,7 @@ avrDigitalPin
 \begin_inset CommandInset href
 LatexCommand href
 target "https://github.com/NormanDunbar/digitalPin"
+literal "false"
 
 \end_inset
 
@@ -701,6 +705,7 @@ digitalPin
 \begin_inset CommandInset href
 LatexCommand href
 target "https://github.com/NormanDunbar/avrDigitalPin"
+literal "false"
 
 \end_inset
 
@@ -721,6 +726,7 @@ avrDigitalPin
 \begin_inset CommandInset href
 LatexCommand href
 target "https://github.com/NormanDunbar/WritingLibraries"
+literal "false"
 
 \end_inset
 
@@ -2627,7 +2633,14 @@ What we need to do now is convert the two files, which we added manually
 \end_layout
 
 \begin_layout Section
-Packaging for Library
+Packaging for Download
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Packaging-for-Download"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3207,6 +3220,13 @@ LITERAL1 is used for any #defines or public enums and typedefs in the library.
 
 \begin_layout Subsection
 Packaging the library
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Packaging-the-library"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3336,6 +3356,13 @@ status open
 
 \begin_layout Section
 Installing Into the Arduino IDE
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Installing-Into-theArduino-ide"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3490,6 +3517,7 @@ Open your browser and navigate to
 \begin_inset CommandInset href
 LatexCommand href
 target "https://github.com"
+literal "false"
 
 \end_inset
 
@@ -8396,6 +8424,56 @@ platformio.ini
  file says to use the Arduino framework.
  At link time, however, none of the Arduino functions will be linked into
  the final executable as they are not used.
+ You can tell this by the size of the compiled code, using the example under
+ discussion, it compiles to 428 bytes of Flash RAM and 8 bytes of Static
+ RAM.
+ An Arduino sketch uses a minimum of 9 bytes Static RAM and even the blink
+ sketch uses 924 bytes of Flash RAM.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+RAM:   [          ]   0.4% (used 8 bytes from 2048 bytes)
+\end_layout
+
+\begin_layout Plain Layout
+
+Flash: [          ]   1.3% (used 428 bytes from 32256 bytes)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+However, you don't have to take my word for it just yet, when I show you
+ how to install the library as a native PlatformIO library, you will see
+ the same sized sketch and in that example, the Arduino framework will not
+ be being used, or compiled.
+ This will be covered in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:PlatformIO-Testing-without-a-framework"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "subsec:PlatformIO-Testing-without-a-framework"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -8407,15 +8485,22 @@ telling lies
 \begin_inset Quotes erd
 \end_inset
 
- about the framework is because the library is in the Arduino library structure
- as PlatformIO knows how to download and install an Arduino library when
- the Arduino framework is in use.
- The following section will remedy this, when we test without a framework.
+ about the framework is because the library is currently in the structure
+ of an Arduino library and PlatformIO knows how to download and install
+ an Arduino library but only when the Arduino framework is in use.
+ Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:PlatformIO-Testing-without-a-framework"
+
+\end_inset
+
+ will remedy this, when we test without a framework.
 \end_layout
 
 \begin_layout Standard
-If all is well with the compilation, the code can be uploaded to my Uno
- board with this command:
+That aside, if all is well with the compilation, the code can be uploaded
+ to my Uno board with this command:
 \end_layout
 
 \begin_layout Standard
@@ -8439,14 +8524,275 @@ Looking at the board now, I see the built in LED flashing away as is tradition.
 
 \begin_layout Subsection
 PlatformIO Testing - Without a Framework
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:PlatformIO-Testing-without-a-framework"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
+As discussed, the 
+\begin_inset Flex ClassName
 status open
 
 \begin_layout Plain Layout
-YOU ARE HERE.
+avrDigitalPin
+\end_layout
+
+\end_inset
+
+ library is in the structure of an Arduino library.
+ PlatformIO knows how to install one of these provided the project is using
+ the Arduino Framework.
+ Without it, you get compilation errors similar to these:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Verbose mode can be enabled via `-v, --verbose` option
+\end_layout
+
+\begin_layout Plain Layout
+
+CONFIGURATION: https://docs.platformio.org/page/boards/atmelavr/uno.html
+\end_layout
+
+\begin_layout Plain Layout
+
+PLATFORM: Atmel AVR (3.3.0) > Arduino Uno
+\end_layout
+
+\begin_layout Plain Layout
+
+HARDWARE: ATMEGA328P 16MHz, 2KB RAM, 31.50KB Flash
+\end_layout
+
+\begin_layout Plain Layout
+
+DEBUG: Current (avr-stub) On-board (avr-stub, simavr)
+\end_layout
+
+\begin_layout Plain Layout
+
+PACKAGES: 
+\end_layout
+
+\begin_layout Plain Layout
+
+ - toolchain-atmelavr 1.70300.191015 (7.3.0)
+\end_layout
+
+\begin_layout Plain Layout
+
+LDF: Library Dependency Finder -> http://bit.ly/configure-pio-ldf
+\end_layout
+
+\begin_layout Plain Layout
+
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+\end_layout
+
+\begin_layout Plain Layout
+
+Found 0 compatible libraries
+\end_layout
+
+\begin_layout Plain Layout
+
+Scanning dependencies...
+\end_layout
+
+\begin_layout Plain Layout
+
+No dependencies
+\end_layout
+
+\begin_layout Plain Layout
+
+Building in release mode
+\end_layout
+
+\begin_layout Plain Layout
+
+Compiling .pio/build/uno/src/main.o
+\end_layout
+
+\begin_layout Plain Layout
+
+src/main.cpp:9:10: fatal error: avrDigitalPin.h: No such file or directory
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+*************************************************************
+\end_layout
+
+\begin_layout Plain Layout
+
+* Looking for avrDigitalPin.h dependency? Check our library registry!
+\end_layout
+
+\begin_layout Plain Layout
+
+*
+\end_layout
+
+\begin_layout Plain Layout
+
+* CLI  > platformio lib search "header:avrDigitalPin.h"
+\end_layout
+
+\begin_layout Plain Layout
+
+* Web  > https://platformio.org/lib/search?query=header:avrDigitalPin.h
+\end_layout
+
+\begin_layout Plain Layout
+
+*
+\end_layout
+
+\begin_layout Plain Layout
+
+*************************************************************
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+ #include "avrDigitalPin.h"
+\end_layout
+
+\begin_layout Plain Layout
+
+          ^~~~~~~~~~~~~~~~~
+\end_layout
+
+\begin_layout Plain Layout
+
+compilation terminated.
+\end_layout
+
+\begin_layout Plain Layout
+
+*** [.pio/build/uno/src/main.o] Error 1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It's the same 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+platformio.ini
+\end_layout
+
+\end_inset
+
+ file, it just doesn't mention the framework to use.
+ Can we fix it? We can, and in two ways:
+\end_layout
+
+\begin_layout Itemize
+Install the library locally, for our own use in this project;
+\end_layout
+
+\begin_layout Itemize
+Publish the library for everyone to use, and install from the library repository.
+\end_layout
+
+\begin_layout Standard
+We will discuss how to install locally for our own use next.
+ There's a bit more work to do in order to publish the library, that will
+ be dealt with later in Sections 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Registering-with-PlatformIO"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Registering-with-PlatformIO"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Installing-into-the-project"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Installing-into-the-project"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Installing Locally
+\end_layout
+
+\begin_layout Standard
+To install the 
+\begin_inset Flex ClassName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin
+\end_layout
+
+\end_inset
+
+ library locally, for use by a project, all you need to do is:
+\end_layout
+
+\begin_layout Itemize
+Create a directory for the project and change into it:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+mkdir pio_output
+\end_layout
+
+\begin_layout Plain Layout
+
+cd pio_output
 \end_layout
 
 \end_inset
@@ -8455,30 +8801,228 @@ YOU ARE HERE.
 \end_layout
 
 \begin_layout Itemize
-Create a lib/avrDigitalPin directory.
+Create the project:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+pio init -b uno
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
-Copy *.h and *.cpp there.
+Create a 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+lib/avrDigitalPin
+\end_layout
+
+\end_inset
+
+ directory:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+mkdir lib/avrDigitalPin
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
-Delete framework from ini file.
+Copy the existing Arduino structured library source and header files over:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+cp ../avrDigitalPin/src/* lib/avrDigitalPin
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
-Compile.
+Edit 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+platformio.ini
+\end_layout
+
+\end_inset
+
+ and delete this line: 
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+framework = arduino
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
-Upload.
+Create 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+src/main.cpp
+\end_layout
+
+\end_inset
+
+ and add in the code from Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:main-cpp-1"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Compile the project:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+pio run
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Upload the firmware:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+pio run -t upload
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-???????????
+You will note from the compilation output that none of the Arduino files
+ were compiled and the final size of the project's executable is 
 \end_layout
 
 \begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+RAM:   [          ]   0.4% (used 8 bytes from 2048 bytes)
+\end_layout
+
+\begin_layout Plain Layout
+
+Flash: [          ]   1.3% (used 428 bytes from 32256 bytes)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is the same as the testing with the Arduino framework example, and
+ proves that in that example, none of the Arduino files were linked to the
+ final executable, even though they were compiled.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+note{In older versions of PlatformIO, a library could be installed globally
+ for use by any project.
+ Unfortunately, libraries with the same name but for different platforms
+ got muddled up and corrupted the compilation as, for example, an Arduino
+ library for an AVR microcontroller is no good to an ESP32 mucrocontroller.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Since PlatformIO version 5.0, global libraries are no longer allowed.
+ Any project wishing to use a library has to install it into it's own project
+ structure as previously described.
+ This leads to the same library code being found all over your project hierarchy
+ which is a bad thing, but, it gives youthe option to use different versions
+ of the same library in different projects.
+ Good and bad.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Of course, there's still a way to get the library installed once and used
+ by any project, your friend here is the 
+\backslash
+texttt{lib
+\backslash
+_extra
+\backslash
+_dirs} option in 
+\backslash
+texttt{platformio.ini} as will be explained in Section 
+\backslash
+ref{sec:Installing-Globally}, 
+\backslash
+nameref{sec:Installing-Globally}.}
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
@@ -8486,12 +9030,849 @@ Upload.
 Packaging for Download
 \end_layout
 
-\begin_layout Section
-Registering with PlatformIO
+\begin_layout Standard
+The process to package up the 
+\begin_inset Flex ClassName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin
+\end_layout
+
+\end_inset
+
+ library is exactly the same as the process described in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Packaging-for-Download"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Packaging-for-Download"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ apart from the fact that the library name is different and we already have
+ the desired structure as we copied everything from the 
+\begin_inset Flex ClassName
+status open
+
+\begin_layout Plain Layout
+digitalPin
+\end_layout
+
+\end_inset
+
+ library we initially created.
+\end_layout
+
+\begin_layout Standard
+As we have changed the library code quite a bit, we need to update the 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+library.properties
+\end_layout
+
+\end_inset
+
+ file and the 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+keywords.txt
+\end_layout
+
+\end_inset
+
+ file to suit.
+\end_layout
+
+\begin_layout Subsection
+Updating Library.Properties
+\end_layout
+
+\begin_layout Standard
+Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:library-properties-file-1"
+
+\end_inset
+
+ is the new 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+library.properties
+\end_layout
+
+\end_inset
+
+ for the 
+\begin_inset Flex ClassName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin
+\end_layout
+
+\end_inset
+
+ library.
+ You can see that only the 
+\begin_inset Quotes eld
+\end_inset
+
+name
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+sentence
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+url
+\begin_inset Quotes erd
+\end_inset
+
+ have been changed since we wrote the file for 
+\begin_inset Flex ClassName
+status open
+
+\begin_layout Plain Layout
+digitalPin
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+name=avrDigitalPin
+\end_layout
+
+\begin_layout Plain Layout
+
+version=1.0.0
+\end_layout
+
+\begin_layout Plain Layout
+
+author=Norman Dunbar <normandunbar@example.com>
+\end_layout
+
+\begin_layout Plain Layout
+
+maintainer=Norman Dunbar <normandunbar@example.com>
+\end_layout
+
+\begin_layout Plain Layout
+
+sentence=Implements input and output "avrDigitalPin" objects.
+\end_layout
+
+\begin_layout Plain Layout
+
+paragraph=A friendly way to use the pins on Arduino boards.
+\end_layout
+
+\begin_layout Plain Layout
+
+category=Signal Input/Output
+\end_layout
+
+\begin_layout Plain Layout
+
+url=https://github.com/NormanDunbar/avrDigitalPin
+\end_layout
+
+\begin_layout Plain Layout
+
+architectures=avr
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Library Properties File
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:library-properties-file-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Updating Keywords.txt
+\end_layout
+
+\begin_layout Standard
+Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:Library-Keywords-File-1"
+
+\end_inset
+
+ is the new 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+keywords.txt
+\end_layout
+
+\end_inset
+
+ file.
+ You can see in this version of the file, that a number of LITERAL1 entries
+ have been made to cover the various pin modes, names and states.
+ The function names remain the same as per digitalPin but obvioulsy, the
+ class name, KEYWORD1, has been changed to suit.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+#######################################
+\end_layout
+
+\begin_layout Plain Layout
+
+# Syntax Coloring Map
+\end_layout
+
+\begin_layout Plain Layout
+
+#######################################
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+#######################################
+\end_layout
+
+\begin_layout Plain Layout
+
+# Datatypes (KEYWORD1)
+\end_layout
+
+\begin_layout Plain Layout
+
+#######################################
+\end_layout
+
+\begin_layout Plain Layout
+
+digitalPin	KEYWORD1
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+#######################################
+\end_layout
+
+\begin_layout Plain Layout
+
+# Methods and Functions (KEYWORD2)
+\end_layout
+
+\begin_layout Plain Layout
+
+#######################################
+\end_layout
+
+\begin_layout Plain Layout
+
+setState	KEYWORD2
+\end_layout
+
+\begin_layout Plain Layout
+
+getState	KEYWORD2
+\end_layout
+
+\begin_layout Plain Layout
+
+toggleState	KEYWORD2
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+######################################
+\end_layout
+
+\begin_layout Plain Layout
+
+# Constants (LITERAL1)
+\end_layout
+
+\begin_layout Plain Layout
+
+#######################################
+\end_layout
+
+\begin_layout Plain Layout
+
+#
+\end_layout
+
+\begin_layout Plain Layout
+
+# Pin Modes:
+\end_layout
+
+\begin_layout Plain Layout
+
+#
+\end_layout
+
+\begin_layout Plain Layout
+
+pinINPUT	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinINPUT_PULLUP	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinOUTPUT	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+#
+\end_layout
+
+\begin_layout Plain Layout
+
+# Pin States:
+\end_layout
+
+\begin_layout Plain Layout
+
+#
+\end_layout
+
+\begin_layout Plain Layout
+
+pinLOW	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinHIGH	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+#
+\end_layout
+
+\begin_layout Plain Layout
+
+# Pin Names:
+\end_layout
+
+\begin_layout Plain Layout
+
+#
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD0	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD1	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD2	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD3	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD4	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD5	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD6	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD7	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD8	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD9	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD10	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD11	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD12	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD13	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD14	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD15	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD16	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD17	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD18	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinD19	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+#
+\end_layout
+
+\begin_layout Plain Layout
+
+pinA0	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinA1	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinA2	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinA3	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinA4	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinA5	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+#
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPD0	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPD1	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPD2	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPD3	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPD4	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPD5	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPD6	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPD7	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+#
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPB0	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPB1	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPB2	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPB3	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPB4	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPB5	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+#
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPC0	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPC1	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPC2	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPC3	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPC4	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+pinPC5	LITERAL1
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Library Keywords File
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:Library-Keywords-File-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Packaging the Library for Arduino Use
+\end_layout
+
+\begin_layout Standard
+This process is exactly the same, apart from filenames, as described in
+ Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Packaging-the-library"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "subsec:Packaging-the-library"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and will not be discussed in any further detail here, only brief bullet
+ points will be necessary.
+ Please refer back to Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Packaging-the-library"
+
+\end_inset
+
+ for full details.
+\end_layout
+
+\begin_layout Itemize
+Zip the library's top level directory into a zip file.
+ The zip file will usually be named for the library, so 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin.zip
+\end_layout
+
+\end_inset
+
+ will be the created file in this case.
+\end_layout
+
+\begin_layout Itemize
+The zip file should contain the 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+src
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+examples
+\end_layout
+
+\end_inset
+
+ directories, the 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+library.properties
+\end_layout
+
+\end_inset
+
+ file and the, optional, 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+keywords.txt
+\end_layout
+
+\end_inset
+
+ file.
 \end_layout
 
 \begin_layout Section
-Installing into the Project
+Packing PlatformIO Libraries
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+YOU ARE HERE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Registering with PlatformIO
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Registering-with-PlatformIO"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Installing into Projects
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Installing-into-the-project"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Installing Globally
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Installing-Globally"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -8500,6 +9881,43 @@ Creating a GitHub repository
 
 \begin_layout Section
 Using With the Arduino IDE
+\end_layout
+
+\begin_layout Standard
+Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Installing-Into-theArduino-ide"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Installing-Into-theArduino-ide"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, describes how to use one of two methods to install a library into the
+ Arduino IDE.
+ That process is exactly the same, filenames excepted, when installing the
+ 
+\begin_inset Flex ClassName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin
+\end_layout
+
+\end_inset
+
+ library, and will not be discussed in detail here.
 \end_layout
 
 \begin_layout Standard
