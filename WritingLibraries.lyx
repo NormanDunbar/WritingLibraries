@@ -1,5 +1,5 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -67,6 +67,9 @@
 }
 
 \usepackage[toc,page]{appendix}
+% Added by lyx2lyx
+\renewcommand{\textendash}{--}
+\renewcommand{\textemdash}{---}
 \end_preamble
 \options idxtotoc, numbers=noendperiod
 \use_default_options true
@@ -156,8 +159,6 @@ End
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
-\use_microtype false
-\use_dash_ligatures true
 \graphics default
 \default_output_format pdf2
 \output_sync 0
@@ -201,7 +202,6 @@ End
 \suppress_date false
 \justification false
 \use_refstyle 1
-\use_minted 0
 \boxbgcolor #ff557f
 \index Index
 \shortcut idx
@@ -211,10 +211,7 @@ End
 \tocdepth 3
 \paragraph_separation skip
 \defskip medskip
-\is_math_indent 0
-\math_numbering_side default
-\quotes_style english
-\dynamic_quotes 0
+\quotes_language english
 \papercolumns 1
 \papersides 2
 \paperpagestyle default
@@ -684,7 +681,6 @@ avrDigitalPin
 \begin_inset CommandInset href
 LatexCommand href
 target "https://github.com/NormanDunbar/digitalPin"
-literal "false"
 
 \end_inset
 
@@ -705,7 +701,6 @@ digitalPin
 \begin_inset CommandInset href
 LatexCommand href
 target "https://github.com/NormanDunbar/avrDigitalPin"
-literal "false"
 
 \end_inset
 
@@ -726,7 +721,6 @@ avrDigitalPin
 \begin_inset CommandInset href
 LatexCommand href
 target "https://github.com/NormanDunbar/WritingLibraries"
-literal "false"
 
 \end_inset
 
@@ -3517,7 +3511,6 @@ Open your browser and navigate to
 \begin_inset CommandInset href
 LatexCommand href
 target "https://github.com"
-literal "false"
 
 \end_inset
 
@@ -8467,9 +8460,6 @@ reference "subsec:PlatformIO-Testing-without-a-framework"
 \begin_inset CommandInset ref
 LatexCommand nameref
 reference "subsec:PlatformIO-Testing-without-a-framework"
-plural "false"
-caps "false"
-noprefix "false"
 
 \end_inset
 
@@ -8735,9 +8725,6 @@ reference "sec:Registering-with-PlatformIO"
 \begin_inset CommandInset ref
 LatexCommand nameref
 reference "sec:Registering-with-PlatformIO"
-plural "false"
-caps "false"
-noprefix "false"
 
 \end_inset
 
@@ -8752,9 +8739,6 @@ reference "sec:Installing-into-the-project"
 \begin_inset CommandInset ref
 LatexCommand nameref
 reference "sec:Installing-into-the-project"
-plural "false"
-caps "false"
-noprefix "false"
 
 \end_inset
 
@@ -9027,7 +9011,7 @@ nameref{sec:Installing-Globally}.}
 \end_layout
 
 \begin_layout Section
-Packaging for Download
+Arduino Library Packaging
 \end_layout
 
 \begin_layout Standard
@@ -9045,9 +9029,6 @@ avrDigitalPin
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Packaging-for-Download"
-plural "false"
-caps "false"
-noprefix "false"
 
 \end_inset
 
@@ -9055,9 +9036,6 @@ noprefix "false"
 \begin_inset CommandInset ref
 LatexCommand nameref
 reference "sec:Packaging-for-Download"
-plural "false"
-caps "false"
-noprefix "false"
 
 \end_inset
 
@@ -9732,7 +9710,7 @@ name "lis:Library-Keywords-File-1"
 \end_layout
 
 \begin_layout Subsection
-Packaging the Library for Arduino Use
+Packaging the Library
 \end_layout
 
 \begin_layout Standard
@@ -9748,9 +9726,6 @@ reference "subsec:Packaging-the-library"
 \begin_inset CommandInset ref
 LatexCommand nameref
 reference "subsec:Packaging-the-library"
-plural "false"
-caps "false"
-noprefix "false"
 
 \end_inset
 
@@ -9826,15 +9801,135 @@ keywords.txt
 \end_layout
 
 \begin_layout Section
-Packing PlatformIO Libraries
+Packaging PlatformIO Libraries
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
+We've already discussed that the PlatformIO system can understand the structure
+ of an Arduino IDE library, but only when using the Arduino framework.
+ We have see how the library structure is happily used to install the library
+ without a hitch, as long as that framework is in use – even if the application
+ code doesn't actually use any of the Arduino functions, it will still compile
+ all the Arduino file, build a library and then, ignore it!
+\end_layout
+
+\begin_layout Standard
+This is a bug bear of mine, so how can we create a library that PlatformIO
+ can use, without any particular framework being required? There are a number
+ of simple steps to carry out:
+\end_layout
+
+\begin_layout Itemize
+Create the required directory structure;
+\end_layout
+
+\begin_layout Itemize
+Optionally, create a GitHub repository;
+\end_layout
+
+\begin_layout Itemize
+Create the 
+\begin_inset Flex FileName
 status open
 
 \begin_layout Plain Layout
-YOU ARE HERE
+library.json
+\end_layout
+
+\end_inset
+
+ file describing the library;
+\end_layout
+
+\begin_layout Itemize
+Package & register the library with PlatformIO;
+\end_layout
+
+\begin_layout Itemize
+Wait!
+\end_layout
+
+\begin_layout Itemize
+Install or use the library with PlatformIO.
+\end_layout
+
+\begin_layout Subsection
+Creating the Library Structure
+\end_layout
+
+\begin_layout Standard
+The structure of a library for PlatformIO is quite simple and should look
+ like this:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+avrDigitalPin
+\end_layout
+
+\begin_layout Plain Layout
+
+|
+\end_layout
+
+\begin_layout Plain Layout
+
++-- src
+\end_layout
+
+\begin_layout Plain Layout
+
+|   +-- avrDigitalPin.cpp
+\end_layout
+
+\begin_layout Plain Layout
+
+|
+\end_layout
+
+\begin_layout Plain Layout
+
++-- include
+\end_layout
+
+\begin_layout Plain Layout
+
+|   +-- avrDigitalPin.h
+\end_layout
+
+\begin_layout Plain Layout
+
+|
+\end_layout
+
+\begin_layout Plain Layout
+
++-- examples
+\end_layout
+
+\begin_layout Plain Layout
+
+|   +-- avrDigitalPin-input.cpp
+\end_layout
+
+\begin_layout Plain Layout
+
+|   +-- avrDigitalPin-output.cpp
+\end_layout
+
+\begin_layout Plain Layout
+
+|
+\end_layout
+
+\begin_layout Plain Layout
+
++-- library.json
 \end_layout
 
 \end_inset
@@ -9842,8 +9937,1211 @@ YOU ARE HERE
 
 \end_layout
 
-\begin_layout Section
-Registering with PlatformIO
+\begin_layout Standard
+At the top level is a directory named after the library.
+ This is not mandatory, but is extremely helpful.
+ Beneath that are the 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+src
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+include
+\end_layout
+
+\end_inset
+
+ directories where the library's 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+*.cpp
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+*.h
+\end_layout
+
+\end_inset
+
+ files respectively, are to be located.
+ The 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+examples
+\end_layout
+
+\end_inset
+
+ directory contains all the example applications.
+ C++ source and header files can live here.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+Library.json
+\end_layout
+
+\end_inset
+
+, is similar to the Arduino's 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+library.properties
+\end_layout
+
+\end_inset
+
+ file, it describes the library and where it can be found on the internet,
+ on GitHub for example, and so on.
+\end_layout
+
+\begin_layout Standard
+We will first create a GitHub repository for the library.
+ As we already have an 
+\begin_inset Flex ClassName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin
+\end_layout
+
+\end_inset
+
+ repository, this PlatformIO specific one will need a different name.
+ I'm calling mine 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+pioDigitalPin
+\end_layout
+
+\end_inset
+
+, however, the library is still named 
+\begin_inset Flex ClassName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin
+\end_layout
+
+\end_inset
+
+.
+ Once we checkout the repository, we can easily create the required structure.
+\end_layout
+
+\begin_layout Subsection
+Creating a GitHub repository
+\end_layout
+
+\begin_layout Standard
+Point your browser at https://github.com and create a new repository in the
+ usual manner.
+ As mentioned, mine is called 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+pioDigitalPin
+\end_layout
+
+\end_inset
+
+ as I need a different name to 
+\begin_inset Flex ClassName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin
+\end_layout
+
+\end_inset
+
+, but the library will still be named 
+\begin_inset Flex ClassName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin
+\end_layout
+
+\end_inset
+
+.
+ As usual, the repository will have a 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+Readme
+\end_layout
+
+\end_inset
+
+ file, a 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+License
+\end_layout
+
+\end_inset
+
+ and a 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+.gitignore
+\end_layout
+
+\end_inset
+
+ set up as part of the initial creation.
+ My license is MIT and the 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+.gitignore
+\end_layout
+
+\end_inset
+
+ is configured for C++.
+ 
+\end_layout
+
+\begin_layout Standard
+Once created, click the green 
+\begin_inset Quotes eld
+\end_inset
+
+code
+\begin_inset Quotes erd
+\end_inset
+
+ button, as before, and choose your download method.
+ Don't choose the zipped tarball through! I chose to use the ssh variant
+ as I have appropriate keys loaded into my user account.
+ Since 13th August 2021, you cannot use a username/password combination
+ to access a repository.
+ If you choose 
+\begin_inset Quotes eld
+\end_inset
+
+https
+\begin_inset Quotes erd
+\end_inset
+
+ then you will need to create an access token and use that to allow you
+ to be able to use your repository.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+warning{Beware.
+ GitHub will show your access token details 
+\backslash
+emph{only once} and then it is gone.
+ When your details are displayed, 
+\backslash
+emph{make a note!} If you refresh or navigate off the page, you will never
+ see them again.
+ Take care.}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Switch to your Source Code directory and clone your new, blank repository.
+ In my case it was a simple:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+ git clone git@github.com:NormanDunbar/pioDigitalPin.git
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Change into the pioDigitalPin directory and execute the following commands:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+mkdir -p {src,examples,include}
+\end_layout
+
+\begin_layout Plain Layout
+
+touch library.json
+\end_layout
+
+\begin_layout Plain Layout
+
+cp ../avrDigitalPin/src/*.cpp src/
+\end_layout
+
+\begin_layout Plain Layout
+
+cp ../avrDigitalPin/src/*.h include/
+\end_layout
+
+\begin_layout Plain Layout
+
+touch examples/avrDigitalPin-input.cpp
+\end_layout
+
+\begin_layout Plain Layout
+
+touch examples/avrDigitalPin-output.cpp
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We now need to update the currently blank 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+library.json
+\end_layout
+
+\end_inset
+
+ file.
+\end_layout
+
+\begin_layout Subsection
+Create 
+\begin_inset Quotes eld
+\end_inset
+
+library.json
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:Library.json"
+
+\end_inset
+
+ shows the minimum 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+library.json
+\end_layout
+
+\end_inset
+
+ file required to publish a PlatformIO library.
+ The content is pretty much similar to that in the Arduino version's 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+library.properties
+\end_layout
+
+\end_inset
+
+ file, but in JSON format as opposed to plain text.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+  "name": "avrDigitalPin",
+\end_layout
+
+\begin_layout Plain Layout
+
+  "version": "1.0.0",
+\end_layout
+
+\begin_layout Plain Layout
+
+  "description": "Example library for PlatformIO.
+ Demonstrates avrDigitalPin class for avr platform.",
+\end_layout
+
+\begin_layout Plain Layout
+
+  "keywords": "pin, digitalPin, avrDigitalPin",
+\end_layout
+
+\begin_layout Plain Layout
+
+  "repository":
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    "type": "git",
+\end_layout
+
+\begin_layout Plain Layout
+
+    "url": "https://github.com/NormanDunbar/pioDigitalPin"
+\end_layout
+
+\begin_layout Plain Layout
+
+  },
+\end_layout
+
+\begin_layout Plain Layout
+
+  "authors":
+\end_layout
+
+\begin_layout Plain Layout
+
+  [
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      "name": "Norman Dunbar",
+\end_layout
+
+\begin_layout Plain Layout
+
+      "email": "norman@dunbar-it.co.uk",
+\end_layout
+
+\begin_layout Plain Layout
+
+      "url": "http://www.dunbar-it.co.uk/contact-us/",
+\end_layout
+
+\begin_layout Plain Layout
+
+      "maintainer": true
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+  ],
+\end_layout
+
+\begin_layout Plain Layout
+
+  "license": "MIT",
+\end_layout
+
+\begin_layout Plain Layout
+
+  "homepage": "https://github.com/NormanDunbar/pioDigitalPin",
+\end_layout
+
+\begin_layout Plain Layout
+
+  "frameworks": "*",
+\end_layout
+
+\begin_layout Plain Layout
+
+  "platforms": "atmelavr"
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+Library.json
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:Library.json"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Because this library can, hopefully, be used on all AVR type microcontrollers,
+ the JSON specifies that the platform is 
+\begin_inset Quotes eld
+\end_inset
+
+atmelavr
+\begin_inset Quotes erd
+\end_inset
+
+, and the list of frameworks to which it applies is all of them.
+ Had the code been specific to one or two particular frameworks, you would
+ specify those frameworks here as a comma-space separated list.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tip{In this case, the code is specific to no frameworks, not to all of them!
+ However, the platform determines the microcontroller family and by specifying
+ that it applies to all frameworks, it really means to none of them -- because
+ it makes no difference, the framework chosen isn't used or needed by the
+ library.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+It confused me, that's for sure!}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Create the Example Code
+\end_layout
+
+\begin_layout Standard
+We 
+\begin_inset Quotes eld
+\end_inset
+
+touched
+\begin_inset Quotes erd
+\end_inset
+
+ two example applications when we created the directory structure.
+ Now is the time to add the code in Listings 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:pioDigitalPin-output-example"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:pioDigitalPin-input-example"
+
+\end_inset
+
+ to the two example files.
+ Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:pioDigitalPin-output-example"
+
+\end_inset
+
+ is 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin-output
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+/*
+\end_layout
+
+\begin_layout Plain Layout
+
+ * Example sketch using the "avrDigitalPins" library.
+\end_layout
+
+\begin_layout Plain Layout
+
+ *
+\end_layout
+
+\begin_layout Plain Layout
+
+ * Norman Dunbar
+\end_layout
+
+\begin_layout Plain Layout
+
+ * 26 August 2021.
+\end_layout
+
+\begin_layout Plain Layout
+
+ */
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Include the library header.
+\end_layout
+
+\begin_layout Plain Layout
+
+#include "avrDigitalPin.h"
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Header for _delay_ms() also required.
+\end_layout
+
+\begin_layout Plain Layout
+
+#include <util/delay.h>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Create an avrDigitalPin connected to the built in LED
+\end_layout
+
+\begin_layout Plain Layout
+
+// and configure it as output.
+\end_layout
+
+\begin_layout Plain Layout
+
+avrDigitalPin ledPin(pinD13, pinOUTPUT);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+int main() {
+\end_layout
+
+\begin_layout Plain Layout
+
+    // SETUP:
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // No further setup required, but quick
+\end_layout
+
+\begin_layout Plain Layout
+
+    // flash the LED a couple of times "manually".
+\end_layout
+
+\begin_layout Plain Layout
+
+    for (uint8_t x = 0; x < 5; x++) {
+\end_layout
+
+\begin_layout Plain Layout
+
+        ledPin.setState(pinHIGH);
+\end_layout
+
+\begin_layout Plain Layout
+
+        _delay_ms(250);
+\end_layout
+
+\begin_layout Plain Layout
+
+        ledPin.setState(pinLOW);
+\end_layout
+
+\begin_layout Plain Layout
+
+        _delay_ms(100);
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // Delay before starting the loop.
+\end_layout
+
+\begin_layout Plain Layout
+
+    _delay_ms(1500);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // LOOP:
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    while (1) {
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        // Flash the pin every second.
+\end_layout
+
+\begin_layout Plain Layout
+
+        ledPin.toggleState();
+\end_layout
+
+\begin_layout Plain Layout
+
+        _delay_ms(1000);
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+avrDigitalPin-output Example
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:pioDigitalPin-output-example"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:pioDigitalPin-input-example"
+
+\end_inset
+
+ is 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin-input
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+/*
+\end_layout
+
+\begin_layout Plain Layout
+
+ * Example sketch using the "avrDigitalPins" library.
+\end_layout
+
+\begin_layout Plain Layout
+
+ *
+\end_layout
+
+\begin_layout Plain Layout
+
+ * Reads a switch on pin D2, toggles the builtin LED.
+\end_layout
+
+\begin_layout Plain Layout
+
+ *
+\end_layout
+
+\begin_layout Plain Layout
+
+ * Norman Dunbar
+\end_layout
+
+\begin_layout Plain Layout
+
+ * 26 August 2021.
+\end_layout
+
+\begin_layout Plain Layout
+
+ */
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Include the library header.
+\end_layout
+
+\begin_layout Plain Layout
+
+#include "avrDigitalPin.h"
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Header for _delay_ms() also required.
+\end_layout
+
+\begin_layout Plain Layout
+
+#include <util/delay.h>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Create a digitalPin connected to the built in LED
+\end_layout
+
+\begin_layout Plain Layout
+
+// and configure it as output.
+\end_layout
+
+\begin_layout Plain Layout
+
+avrDigitalPin ledPin(pinD13, pinOUTPUT);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// And another attached to D2, configured as an input
+\end_layout
+
+\begin_layout Plain Layout
+
+// with pullup.
+\end_layout
+
+\begin_layout Plain Layout
+
+avrDigitalPin switchPin(pinD2, pinINPUT_PULLUP);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+int main() {
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // SETUP:
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // No setup specifically required, but quick
+\end_layout
+
+\begin_layout Plain Layout
+
+    // flash the LED a couple of times "manually".
+\end_layout
+
+\begin_layout Plain Layout
+
+    for (uint8_t x = 0; x < 5; x++) {
+\end_layout
+
+\begin_layout Plain Layout
+
+        ledPin.setState(pinHIGH);
+\end_layout
+
+\begin_layout Plain Layout
+
+        _delay_ms(250);
+\end_layout
+
+\begin_layout Plain Layout
+
+        ledPin.setState(pinLOW);
+\end_layout
+
+\begin_layout Plain Layout
+
+        _delay_ms(100);
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // Delay before starting the loop.
+\end_layout
+
+\begin_layout Plain Layout
+
+    _delay_ms(1500);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // LOOP:
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // Read the switch and if pressed, toggle
+\end_layout
+
+\begin_layout Plain Layout
+
+    // the built in LED.
+\end_layout
+
+\begin_layout Plain Layout
+
+    // BEWARE: Without debouncing, this might be
+\end_layout
+
+\begin_layout Plain Layout
+
+    //         somewhat random.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (switchPin.getState() == pinLOW) {
+\end_layout
+
+\begin_layout Plain Layout
+
+        // Switch pressed, toggle the ledPin.
+\end_layout
+
+\begin_layout Plain Layout
+
+        ledPin.toggleState();
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // A small delay.
+ This stops the switch being
+\end_layout
+
+\begin_layout Plain Layout
+
+    // read again and again while held down!
+\end_layout
+
+\begin_layout Plain Layout
+
+    // Press and release as quick as possible!
+\end_layout
+
+\begin_layout Plain Layout
+
+    _delay_ms(250);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+avrDigitalPin-input Example
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:pioDigitalPin-input-example"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Package & Register with PlatformIO
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:Registering-with-PlatformIO"
@@ -9851,6 +11149,177 @@ name "sec:Registering-with-PlatformIO"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+After all the preparatory work has been done, we can now package up and
+ register our library with the PlatformIO infrastructure.
+ Make sure that we are currently located in the 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+pioDigitalPin
+\end_layout
+
+\end_inset
+
+ directory, and package the library with the command:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+pio package pack -o avrDigitalPin-1.0.0.tar.gz
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If there are any errors in the JSON file, you will be told about it here.
+ If there are no errors, you will see a message informing you that the library
+ has been packaged:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Wrote a tarball to "avrDigitalPin-1.0.0.tar.gz"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The library is ready to be published.
+ However, before that can be done, we need to login to our PlatformIO account:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+pio account login -u NormanDunbar -p ThisI5N0tMyRealPa55w0rd!! 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If you are already logged in you will see this:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Error: You are already authorized with norman.dunbar@example.com account.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Otherwise, you should now be logged in to your account:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Successfully logged in!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The library can be published now:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+pio package publish avrDigitalPin-1.0.0.tar.gz 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Assuming all is well, you should then be presented with this message:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+The package has been accepted.
+ We will notify you on email when process it.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+At this point, you can point your browser at the 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://platformio.org/lib"
+
+\end_inset
+
+ page and search for your library by name.
+ It will most likely be found, however, it may take some time to propagate
+ around the entire PlatformIO infrastructure.
+ This makes it possible that if you were now to attempt to use the library
+ in an application, it may not be found.
+\end_layout
+
+\begin_layout Standard
+After you receive an email telling you that things are all good with the
+ publishing of the library, you should be able to use it.
 \end_layout
 
 \begin_layout Section
@@ -9864,6 +11333,177 @@ name "sec:Installing-into-the-project"
 
 \end_layout
 
+\begin_layout Standard
+After a 
+\begin_inset Quotes eld
+\end_inset
+
+suitable
+\begin_inset Quotes erd
+\end_inset
+
+ delay, the library should be ready for use.
+ Let's create a new project that will test it, using the code in Listing
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:pioDigitalPin-output-example"
+
+\end_inset
+
+.
+ The process is, as usual, quite simple on the command line, which is where
+ I tend to spend my time.
+ This example will be for an Arduino Uno board.
+\end_layout
+
+\begin_layout Itemize
+Create a new directory for the project, and change into it:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+mkdir pio-avrPin-demo
+\end_layout
+
+\begin_layout Plain Layout
+
+cd pio-avrPin-demo
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Initialise a new project:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+pio init -b uno
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Edit the 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+platformio.ini
+\end_layout
+
+\end_inset
+
+ file:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Delete the line:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+framework = arduino
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Add the line:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+lib_deps = normandunbar/avrDigitalPin @ ^1.0.0
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Save and exit.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Create the source file, 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+src/avrDigitalPin-output.cpp
+\end_layout
+
+\end_inset
+
+ and copy the code from Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:pioDigitalPin-output-example"
+
+\end_inset
+
+ into the file.
+\end_layout
+
+\begin_layout Itemize
+Compile:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+pio run
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Upload:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+pio run -t upload
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And, as if by magic, the LED will be flashing.
+ Again!
+\end_layout
+
 \begin_layout Section
 Installing Globally
 \begin_inset CommandInset label
@@ -9875,49 +11515,310 @@ name "sec:Installing-Globally"
 
 \end_layout
 
-\begin_layout Section
-Creating a GitHub repository
-\end_layout
-
-\begin_layout Section
-Using With the Arduino IDE
+\begin_layout Standard
+In the new world of PlatformIO version 5.0 onward, global installation of
+ libraries is forbidden.
+ This feature has caused numerous problems in the past, so it has been deprecate
+d.
+ It is not advised under normal circumstances, and especially if you normally
+ code for different platforms.
+ Some libraries with the same names, but for different platforms, get installed
+ globally and mess up each others compilations.
 \end_layout
 
 \begin_layout Standard
-Section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Installing-Into-theArduino-ide"
-plural "false"
-caps "false"
-noprefix "false"
+So, if you only code for a single platform, you can install libraries so
+ that there's only one copy on your system.
+ This is similar to the Arduino IDE and when the library gets updated, all
+ your Arduino sketches which use it need updating too.
+ And sometimes a new library can break an existing sketch.
+\end_layout
 
+\begin_layout Standard
+The current PlatformIO method of installing the library into each and every
+ project that needs it, means that each project can have a different version
+ of the library and upgrading one will not affect the others.
+\end_layout
+
+\begin_layout Standard
+Having said all that, if you are determined to follow the Arduino method
+ of 
+\emph on
+one library fits all
+\emph default
+ then so be it.
+ Here's how it can be done.
+\end_layout
+
+\begin_layout Itemize
+Create a top level 
+\begin_inset Quotes eld
 \end_inset
 
-, 
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "sec:Installing-Into-theArduino-ide"
-plural "false"
-caps "false"
-noprefix "false"
-
+global libraries
+\begin_inset Quotes erd
 \end_inset
 
-, describes how to use one of two methods to install a library into the
- Arduino IDE.
- That process is exactly the same, filenames excepted, when installing the
- 
-\begin_inset Flex ClassName
+ directory, and change into it:
+\begin_inset listings
+inline false
 status open
 
 \begin_layout Plain Layout
-avrDigitalPin
+
+cd SourceCode
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir PlatformIO-Libraries
+\end_layout
+
+\begin_layout Plain Layout
+
+cd PlatformIO-Libraries
 \end_layout
 
 \end_inset
 
- library, and will not be discussed in detail here.
+
+\end_layout
+
+\begin_layout Itemize
+Create a sub-directory for each and every global library you need to have:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+mkdir avrDigitalPin
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir ...
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Copy the source and header files for each required library into the appropriate
+ sub-directory:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+cp /somewhere/avrDigitalPin/src/* avrDigitalPin/
+\end_layout
+
+\begin_layout Plain Layout
+
+cp /somewhere/avrDigitalPin/include/* avrDigitalPin/
+\end_layout
+
+\begin_layout Plain Layout
+
+cp ...
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+You need a single directory for each library, containing just the source
+ and header files for that particular library.
+ They all must be under a top-level 
+\begin_inset Quotes eld
+\end_inset
+
+enclosing
+\begin_inset Quotes erd
+\end_inset
+
+ library, as we need to use that later.
+\end_layout
+
+\begin_layout Subsection
+Projects Using Global Libraries
+\end_layout
+
+\begin_layout Standard
+To use one of more global libraries, you would create a project in the normal
+ manner.
+ As I've covered this previously, I will not labour the point here.
+\end_layout
+
+\begin_layout Standard
+To use a global library, all you now need to do for each project, is:
+\end_layout
+
+\begin_layout Itemize
+Edit the 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+platformio.ini
+\end_layout
+
+\end_inset
+
+ file and add these two lines, or similar:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+lib_extra_dirs = 
+\end_layout
+
+\begin_layout Plain Layout
+
+    /home/norman/SourceCode/PlatformIO-Libraries
+\end_layout
+
+\end_inset
+
+The path can be relative to where the project is, or, as in this case, a
+ full path specification.
+ I prefer the latter, but other opinions are perfectly valid.
+ It can be useful to keep paths relative if the global libraries and the
+ projects are beneath an all encompassing directory, and 
+\emph on
+might
+\emph default
+ be moved around together.
+\end_layout
+
+\begin_layout Itemize
+Compile:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+pio run
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Upload:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+pio run -t upload
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The one single copy of the global library is used for all projects set up
+ in this manner.
+ What happens at compile time is that the source files are compiled into
+ object files in the current project's 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+.pio/build/uno/libxxx/avrDigitalPin
+\end_layout
+
+\end_inset
+
+ directory, and then linked together to build a static library, 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+avrDigitalPin.a
+\end_layout
+
+\end_inset
+
+ in the directory 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+.pio/build/uno/libxxx/
+\end_layout
+
+\end_inset
+
+.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+xxx
+\begin_inset Quotes erd
+\end_inset
+
+ in this case is a fairly random combination of characters.
+\end_layout
+
+\begin_layout Standard
+Only the compiled object files and the completed library are installed into
+ the project, the source files remain in the 
+\begin_inset Flex RegisterName
+status open
+
+\begin_layout Plain Layout
+lib_extra_dirs
+\end_layout
+
+\end_inset
+
+ directory structure.
+\end_layout
+
+\begin_layout Standard
+Provided you never run a clean build, 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+pio run -t clean
+\end_layout
+
+\end_inset
+
+, or delete the 
+\begin_inset Flex FileName
+status open
+
+\begin_layout Plain Layout
+.pio
+\end_layout
+
+\end_inset
+
+ directory structure, the application code will be using the current version
+ of the library as per the sources just compiled.
+ If the library source files change, the next build of a project using the
+ library will get the updated version of the library.
 \end_layout
 
 \begin_layout Standard
